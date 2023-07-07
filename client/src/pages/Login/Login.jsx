@@ -8,19 +8,28 @@ import "./Login.scss";
 
 const Login = () => {
   const { handleLogin } = useContext(UserContext);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const user = { email, password };
+    const user = { name, email, password };
     handleLogin(user, setError);
   };
 
   return (
     <div className="container">
       <form className="form" onSubmit={handleSubmit}>
+      <FormItem
+          label="Name"
+          containerClassname="form-item"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
         <FormItem
           label="Email"
           containerClassname="form-item"

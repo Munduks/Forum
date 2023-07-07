@@ -12,7 +12,8 @@ const Topbar = () => {
 
   return (
     <nav className="navigation">
-      <div>Logo</div>
+      <div><img className="headerLogo" src="https://gerryontour.de/wp-content/uploads/2017/08/forum-icon-20-150x150.png" alt="logo" />
+      </div>
       <div className="navigation-items">
         {topbarNavigationItems.map((navItem) => (
           <Link to={navItem.route} key={navItem.title}>

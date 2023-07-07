@@ -1,8 +1,6 @@
 import { UserContext } from "../../context/UserContext";
 import { useContext, useState } from "react";
-
 import { Link } from "react-router-dom";
-// import Login from "../Login/Login";
 import { LOGIN_ROUTE } from "../../routes/const";
 
 const Registration = () => {
@@ -13,7 +11,7 @@ const Registration = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const user = {
@@ -22,24 +20,25 @@ const Registration = () => {
       password,
     };
 
-    // Sukurkite POST užklausą naudodami 'fetch' arba kitą HTTP biblioteką
-    fetch("http://localhost:3000/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ user }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          setError(data.error);
-        } else {
-          handleRegister(data);
-        }
-      })
-      .catch((error) => {});
-    console.error(error);
+    try {
+      const response = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user }),
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        setError(data.error);
+      } else {
+        handleRegister(user);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -71,10 +70,11 @@ const Registration = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <Link to={LOGIN_ROUTE}>
-          <button type="submit">Register</button>
-        </Link>
+        <button type="submit">Register</button>
       </form>
+      <p>
+        Already have an account? <Link to={LOGIN_ROUTE}>Login</Link>
+      </p>
     </div>
   );
 };

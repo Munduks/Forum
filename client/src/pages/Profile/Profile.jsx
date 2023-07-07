@@ -5,19 +5,20 @@ import Button from "../../components/Button/Button";
 import "./Profile.scss";
 
 const Profile = () => {
-  const { user, handleUpdateUser, handleLogout } = useContext(UserContext);
+  const { user, handleLogout } = useContext(UserContext);
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState(user.password);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const user = { name, email, password };
-    handleUpdateUser(user);
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const user = { name, email, password };
+  //   console.log(user);
+    // handleUpdateUser(user);
+  // };
 
   return (
-    <form className="profile-form" onSubmit={handleSubmit}>
+    <form className="profile-form" >
       <FormItem
         label="Name"
         containerClassname="form-item"
@@ -43,7 +44,6 @@ const Profile = () => {
         required
       />
       <div className="button-container">
-        <Button>Update</Button>
         <Button type="button" variant="outlined" onClick={handleLogout}>
           Logout
         </Button>

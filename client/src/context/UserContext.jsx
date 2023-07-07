@@ -1,8 +1,8 @@
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LOGIN_ROUTE } from "../routes/const";
+import { LOGIN_ROUTE, PROFILE_ROUTE } from "../routes/const";
 import { checkUserCredentials } from "../utils/user";
-import { getUsers, createUser, updateUser } from "../api/users";
+import { getUsers, createUser} from "../api/users";
 
 const UserContext = createContext({
   user: null,
@@ -27,6 +27,7 @@ const UserProvider = ({ children }) => {
         if (existingUser) {
           setUser(existingUser);
           localStorage.setItem("user", JSON.stringify(existingUser));
+          navigate(PROFILE_ROUTE);
         } else {
           setError("User email or password is incorrect.");
         }
@@ -36,6 +37,7 @@ const UserProvider = ({ children }) => {
       });
   };
 
+ 
   const handleLogout = () => {
     setUser(null);
     localStorage.setItem("user", null);
@@ -52,16 +54,6 @@ const UserProvider = ({ children }) => {
       });
   };
 
-  const handleUpdateUser = (updatingUser) => {
-    updateUser(user.id, updatingUser)
-      .then((response) => {
-        setUser(response);
-        localStorage.setItem("user", JSON.stringify(response));
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
 
   return (
     <UserContext.Provider
@@ -71,7 +63,7 @@ const UserProvider = ({ children }) => {
         handleLogin,
         handleLogout,
         handleRegister,
-        handleUpdateUser,
+        
       }}
     >
       {children}

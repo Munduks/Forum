@@ -7,7 +7,7 @@ require('dotenv').config();
 const port = process.env.PORT || 8080;
 const URI = process.env.DB_CONNECTION_STRING;
 const dbName = process.env.DB_NAME;
-// const URI=mongodb+srv://raimondastonkute:Munduks5522.@cluster0.epyr3cq.mongodb.net/
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -35,15 +35,15 @@ app.post('/register', async (req, res) => {
       password,
     };
 
-    const existingUser = await con
-      .db(dbName)
-      .collection('users')
-      .findOne({ email });
+    // const existingUser = await con
+    //   .db(dbName)
+    //   .collection('users')
+    //   .findOne({ email });
 
-    if (existingUser) {
-      res.status(400).json({ error: 'Toks vartotojas jau yra.' });
-      return;
-    }
+    // if (existingUser) {
+    //   res.status(400).json({ error: 'Toks vartotojas jau yra.' });
+    //   return;
+    // }
 
     const data = await con.db(dbName).collection('users').insertOne(user);
     await con.close();
@@ -56,7 +56,7 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
   try {
     const con = await client.connect();
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
 
     const user = await con.db(dbName).collection('users').findOne({ email });
 
@@ -65,7 +65,7 @@ app.post('/login', async (req, res) => {
       return;
     }
 
-    res.status(200).json({ message: 'Prisijungta sėkmingai.', user });
+    res.status(200).json({ message: 'Prisijungta sėkmingai.', user:{name, email} });
 
     await con.close();
   } catch (error) {
