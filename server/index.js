@@ -7,7 +7,7 @@ require('dotenv').config();
 const port = process.env.PORT || 8080;
 const URI = process.env.DB_CONNECTION_STRING;
 const dbName = process.env.DB_NAME;
-
+// const URI=mongodb+srv://raimondastonkute:Munduks5522.@cluster0.epyr3cq.mongodb.net/
 const app = express();
 app.use(cors());
 app.use(express.json());
