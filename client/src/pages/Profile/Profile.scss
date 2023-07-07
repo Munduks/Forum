@@ -1,0 +1,16 @@
+
+
+.profile-form {
+  width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  
+  border-radius: 10px;
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

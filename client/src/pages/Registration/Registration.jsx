@@ -1,152 +1,81 @@
-import React, { useState } from "react";
-import "./Registration.scss";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
+import { useContext, useState } from "react";
+
+import { Link } from "react-router-dom";
+// import Login from "../Login/Login";
+import { LOGIN_ROUTE } from "../../routes/const";
 
 const Registration = () => {
-  const navigate = useNavigate();
+  const { handleRegister } = useContext(UserContext);
 
-  const [registerForm, setRegisterForm] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirm_password: "",
-  });
-  const [message, setMessage] = useState("");
-
-  const handleInputChange = (e) => {
-    setRegisterForm({
-      ...registerForm,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!handleValidation()) {
-      setMessage("Form was filled out incorrectly");
-      return false;
-    }
 
-    if (registerForm.password !== registerForm.confirm_password) {
-      setMessage("Password do not match");
-      return false;
-    }
+    const user = {
+      name,
+      email,
+      password,
+    };
 
-    axios
-      .post("http://localhost:3000/register", registerForm)
-      .then((resp) => {
-        setMessage(resp.data.message);
-        if (resp.data.status === "success") {
-          setTimeout(() => {
-            navigate("/login");
-          }, 1500);
+    // Sukurkite POST užklausą naudodami 'fetch' arba kitą HTTP biblioteką
+    fetch("http://localhost:3000/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          setError(data.error);
+        } else {
+          handleRegister(data);
         }
       })
-      .catch(() => {
-        setMessage("Server error");
-      });
-  };
-
-  const handleValidation = () => {
-    for (let index of Object.keys(registerForm)) {
-      if (registerForm[index] === "") {
-        return false;
-      }
-    }
-
-    return true;
+      .catch((error) => {});
+    console.error(error);
   };
 
   return (
-    <>
-      <section className="h-90">
-        <div className="container registerMain">
-          <div className="row d-flex justify-content-center align-items-center">
-            <div className="col">
-              <div className="card cardMain">
-                <div className="row g-0 formBackground">
-                  <div className="col-xl-6">
-                    <div className="card-body p-md-5 text-black">
-                      <div className="loginLogo">
-                        <img
-                          className="loginLogoImg"
-                          src="https://static.wixstatic.com/media/dfa345_1a5420375dfe442992cd34cba3db47e8~mv2.png/v1/fill/w_1150,h_425,al_c,lg_1,q_90,enc_auto/Home_logo_v03.png"
-                          alt="Logo"
-                        ></img>
-                      </div>
-                      <h5 className="signInHeading">Register new account</h5>
-                      <hr></hr>
-                      {message && <p className="message">{message}</p>}
-                      <form onSubmit={handleSubmit} className="formMain">
-                        <div className="col-md-6 mb-4">
-                          <div className="form-outline">
-                            <input
-                              name="username"
-                              value={registerForm.username}
-                              onChange={handleInputChange}
-                              type="text"
-                              className="form-control form-control-lg"
-                            />
-                            <label
-                              className="form-label"
-                              htmlFor="form3Example1m"
-                            >
-                              Name
-                            </label>
-                          </div>
-                        </div>
-                        <div className="form-outline mb-4">
-                          <input
-                            name="email"
-                            value={registerForm.email}
-                            onChange={handleInputChange}
-                            type="email"
-                            className="form-control form-control-lg"
-                          />
-                          <label className="form-label" htmlFor="form3Example8">
-                            Email address
-                          </label>
-                        </div>
-                        <div className="form-outline mb-4">
-                          <input
-                            name="password"
-                            value={registerForm.password}
-                            onChange={handleInputChange}
-                            type="password"
-                            className="form-control form-control-lg"
-                          />
-                          <label className="form-label" htmlFor="form3Example9">
-                            Password
-                          </label>
-                        </div>
-                        <div className="form-outline mb-4">
-                          <input
-                            name="confirm_password"
-                            value={registerForm.confirm_password}
-                            onChange={handleInputChange}
-                            type="password"
-                            className="form-control form-control-lg"
-                          />
-                          <label className="form-label" htmlFor="form3Example9">
-                            Confirm Password
-                          </label>
-                        </div>
-                        <div className="pt-1 mb-4">
-                          <button type="submit" className="loginFormBtn">
-                            REGISTER
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
+    <div>
+      <h1>Registration Form</h1>
+      {error && <p className="error">{error}</p>}
+      <form onSubmit={handleSubmit}>
+        <label>Name:</label>
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <label>Email:</label>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <label>Password:</label>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <Link to={LOGIN_ROUTE}>
+          <button type="submit">Register</button>
+        </Link>
+      </form>
+    </div>
   );
 };
 
