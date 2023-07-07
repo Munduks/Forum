@@ -7,14 +7,12 @@ import "./Profile.scss";
 const Profile = () => {
   const { user, handleUpdateUser, handleLogout } = useContext(UserContext);
   const [name, setName] = useState(user.name);
-  const [surname, setSurname] = useState(user.surname);
-  const [date, setDate] = useState(user.date);
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState(user.password);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const user = { name, surname, date, email, password };
+    const user = { name, email, password };
     handleUpdateUser(user);
   };
 
@@ -26,22 +24,6 @@ const Profile = () => {
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        required
-      />
-      <FormItem
-        label="Surname"
-        containerClassname="form-item"
-        type="text"
-        value={surname}
-        onChange={(e) => setSurname(e.target.value)}
-        required
-      />
-      <FormItem
-        label="Birth Date"
-        containerClassname="form-item"
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
         required
       />
       <FormItem
