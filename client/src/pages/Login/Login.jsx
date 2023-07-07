@@ -49,7 +49,7 @@ const Login = () => {
         {error && <p className="error">{error}</p>}
         <div className="button-container">
           <Button>Login</Button>
-          <Link to={REGISTER_ROUTE}>Register</Link>
+          <Link to={REGISTER_ROUTE}>Sign in</Link>
         </div>
       </form>
     </div>

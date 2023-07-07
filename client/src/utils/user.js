@@ -1,6 +1,3 @@
-export const showUserFullName = (user) => {
-  return user ? `${user.name} ` : "";
-};
 
 export const checkUserCredentials = (users, checkingUser) => {
   return users.find(

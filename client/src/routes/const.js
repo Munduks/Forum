@@ -72,7 +72,7 @@ export const authenticatedRoutes = {
 };
 
 export const topbarNavigationItems = [
-  { route: MAIN_ROUTE, title: "Home" },
+  { route: MAIN_ROUTE, title: "Forum" },
   //   { route: PROJECTS_ROUTE, title: "Projects" },
   //   { route: CONTACTS_ROUTE, title: "Contacts" },
 ];

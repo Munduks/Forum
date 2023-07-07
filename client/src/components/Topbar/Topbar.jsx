@@ -2,13 +2,16 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { PROFILE_ROUTE, topbarNavigationItems } from "../../routes/const";
-import { showUserFullName } from "../../utils/user";
 import { FaUserCircle } from "react-icons/fa";
 
 import "./Topbar.scss";
 
 const Topbar = () => {
   const { user } = useContext(UserContext);
+  
+  const showUserFullName = (user) => {
+    return user ? `${user.name} ` : "";
+  };
 
   return (
     <nav className="navigation">

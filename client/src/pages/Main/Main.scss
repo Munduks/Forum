@@ -1,0 +1,37 @@
+.forum-container {
+    margin:0 auto;
+    max-width: 800px;
+  }
+  .forum-container h1{
+    font-size: 4rem;
+    margin-bottom: 10px;
+    text-align: center;
+    color:rgb(112, 104, 151);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  .sort-button {
+    margin-bottom: 2rem;
+  }
+  
+  .question-text {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .question {
+    border: 1px solid rgb(235, 207, 196);
+    padding: 10px;
+    margin-bottom: 20px;
+    color:rgb(78, 49, 136);
+  }
+  
+  .question-date {
+    margin-bottom: 5px;
+    font-style: italic;
+  }
+  
+  .question-updated {
+    font-style: italic;
+    color: #666;
+    font-style: italic;
+  }

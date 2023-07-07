@@ -99,16 +99,28 @@ app.get('/users/:id', async (req, res) => {
   }
 });
 
+
 app.get('/questions', async (req, res) => {
   try {
+    const { sortOrder } = req.query;
     const con = await client.connect();
-    const data = await con.db(dbName).collection('questions').find().toArray();
+    let data = await con.db(dbName).collection('questions').find().toArray();
+
+    
+    if (sortOrder === 'desc') {
+      data = data.sort((a, b) => new Date(b.questionDate) - new Date(a.questionDate));
+    } else {
+      data = data.sort((a, b) => new Date(a.questionDate) - new Date(b.questionDate));
+    }
+
     await con.close();
     res.status(200).json(data);
   } catch (err) {
     res.status(500).send(err);
   }
 });
+
+
 
 // app.post('/questions', async (req, res) => {
 //   try {
@@ -138,7 +150,7 @@ app.post('/questions', async (req, res) => {
     const question = {
       questionText: req.body.questionText,
       questionDate: currentDate,
-      updated: false,
+      updated: false,currentDate,
     };
     const data = await con
       .db(dbName)
@@ -150,6 +162,8 @@ app.post('/questions', async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+
 app.put('/questions/:id', async (req, res) => {
   try {
     const con = await client.connect();

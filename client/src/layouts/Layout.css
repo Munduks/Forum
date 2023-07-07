@@ -1,11 +1,11 @@
 .login-container {
-    height: 90vh;
+    height: 100vh;
     background-color: rgba(209, 201, 255, 1);
     background-position: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 4rem;
+    padding-top: 2.5rem;
     
   }
   img{
@@ -15,4 +15,6 @@
   
   .authenticated-container {
     padding: 1.2rem;
+    background-image: url(https://thumbs.dreamstime.com/z/seamless-background-theme-tourism-hike-camping-journey-sketch-drawing-hand-vintage-style-cool-backpack-compass-279367726.jpg);
+    
   }
