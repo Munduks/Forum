@@ -1,3 +1,4 @@
+import Footer from "../components/Footer/Footer";
 import Topbar from "../components/Topbar/Topbar";
 
 const AuthenticatedLayout = ({ children }) => {
@@ -5,6 +6,7 @@ const AuthenticatedLayout = ({ children }) => {
     <>
       <Topbar />
       <div className="authenticated-container">{children}</div>
+      <Footer/>
     </>
   );
 };

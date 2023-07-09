@@ -7,32 +7,23 @@
   border-radius: 5px;
   background-color: lightblue;
   color: #ffffff;
+ 
+  
 
   &:hover {
     cursor: pointer;
     background-color: darkblue;
+    text-decoration: underline;
   }
 
-  &.error {
-    background-color: red;
-    border-color: red;
+}
+.sort-button {
+    margin-bottom: 2rem;
+    
+}
+.edit-button, .delete-button, .add-button{
+  margin:0.2rem;
+  padding: 5px 11px;
+  
 
-    &:hover {
-      background-color: darkred;
-    }
-  }
-
-  &.success {
-    background-color:green;
-    border-color: darkgreen;
-  }
-
-  &.outlined {
-    background-color: rgb(255, 255, 255);
-    color: lightblue;
-
-    &:hover {
-      background-color: lightcyan;
-    }
-  }
 }

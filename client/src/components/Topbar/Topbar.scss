@@ -7,6 +7,8 @@
   color: white;
   font-size: 1.3rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  position: sticky;
+  box-sizing:inherit;
 
   a {
     color: inherit;
@@ -23,6 +25,7 @@
     display: flex;
     align-items: center;
     gap: 3rem;
+    
   }
   img{
     height: 50px;

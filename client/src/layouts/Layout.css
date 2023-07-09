@@ -15,6 +15,13 @@
   
   .authenticated-container {
     padding: 1.2rem;
-    background-image: url(https://thumbs.dreamstime.com/z/seamless-background-theme-tourism-hike-camping-journey-sketch-drawing-hand-vintage-style-cool-backpack-compass-279367726.jpg);
+    background-image: url(https://img.freepik.com/free-vector/travel-pattern-background_23-2148043441.jpg?w=740&t=st=1688933964~exp=1688934564~hmac=a74b1744778103a759228fcfadda43be99f0fbe50742cb98f428368b112ffb15);
+    /* /* background-image: url(https://thumbs.dreamstime.com/z/seamless-background-theme-tourism-hike-camping-journey-sketch-drawing-hand-vintage-style-cool-backpack-compass-279367726.jpg); */
+    background-size:cover;
     
+    box-sizing: content-box;
+    min-height: calc(100vh - 1.2rem)
+  
+   
   }
+  

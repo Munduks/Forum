@@ -1,0 +1,26 @@
+.footer-container{
+ position: sticky;
+ font-size: 1.3rem;
+ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+   width: 100%;
+   background-color: rgba(209, 201, 255, 1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  color: white;
+   text-align: center;
+   
+
+   &-items {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    
+    
+  }
+  img{
+    height: 50px;
+    width: 50px;
+  }
+}
