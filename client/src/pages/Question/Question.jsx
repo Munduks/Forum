@@ -676,9 +676,9 @@ const Question = () => {
 
   const handleAnswerSubmit = async (e) => {
     e.preventDefault();
-    console.log(answerText)
+    // console.log(answerText)
     try {
-      await axios.post(`http://localhost:3000/questions/${id}/answers`, { answer: answerText });
+      await axios.post(`http://localhost:3000/questions/${id}/answers`, {answers});
       
       setAnswerText('');
       setAnswers();
