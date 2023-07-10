@@ -3,19 +3,19 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import FormItem from '../../components/FormItem/FormItem';
-import "./Action.scss"
+import './Action.scss';
 
-const EditQuestion = () => {
+const EditAnswer = () => {
   const { id } = useParams();
-  const [question, setQuestion] = useState(null);
+  const [answer, setAnswer] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
-    getQuestion(id)
+    getAnswer(id)
       .then((response) => {
-        setQuestion(response);
+        setAnswer(response);
       })
       .catch((error) => {
         console.error(error);
@@ -25,55 +25,55 @@ const EditQuestion = () => {
       });
   }, [id]);
 
-  const getQuestion = async (id) => {
+  const getAnswer = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:3000/questions/${id}`);
+      const response = await axios.get(`http://localhost:3000/answers/${id}`);
       return response.data;
     } catch (error) {
       throw error;
     }
   };
-  const updateQuestion = async () => {
+
+  const updateAnswer = async () => {
     try {
-      const updatedQuestion = {
-        ...question,
-        questionText: question.questionText, 
-        questionUpdateDate:question.currentDate 
+      const updatedAnswer = {
+        ...answer,
+        answerText: answer.answerText,
+        answerUpdateDate: new Date(),
       };
-      await axios.put(`http://localhost:3000/questions/${id}`, updatedQuestion);
-      navigate('/');
+      await axios.put(`http://localhost:3000/answers/${id}`, updatedAnswer);
+      navigate("/questions/:id/edit");
     } catch (error) {
       console.error(error);
     }
   };
-  
 
-  const handleQuestionSubmit = (e) => {
+  const handleAnswerSubmit = (e) => {
     e.preventDefault();
-    updateQuestion();
+    updateAnswer();
   };
 
-  const handleQuestionChange = (e) => {
-    setQuestion({ ...question, questionText: e.target.value });
+  const handleAnswerChange = (e) => {
+    setAnswer({ ...answer, answerText: e.target.value });
   };
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (!question) {
-    return <div>Question not found</div>;
+  if (!answer) {
+    return <div>Answer not found</div>;
   }
 
   return (
     <div className="action-page">
-      <h1 className='action-title'>Edit Question</h1>
-      <form className="form" onSubmit={handleQuestionSubmit}>
+      <h1 className="action-title">Edit Answer</h1>
+      <form className="form" onSubmit={handleAnswerSubmit}>
         <FormItem
           label=""
           type="text"
-          value={question.questionText}
-          onChange={handleQuestionChange}
+          value={answer.answerText}
+          onChange={handleAnswerChange}
         />
         <Button type="submit" className="action-button">
           Save
@@ -83,4 +83,4 @@ const EditQuestion = () => {
   );
 };
 
-export default EditQuestion;
+export default EditAnswer;
