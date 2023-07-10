@@ -14,18 +14,19 @@ app.use(express.json());
 
 const client = new MongoClient(URI);
 
-app.get('/register', async (req, res) => {
-  try {
-    const con = await client.connect();
-    const data = await con.db(dbName).collection('users').find().toArray();
-    await con.close();
-    res.send(data);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
+// app.get('/register', async (req, res) => {
+//   try {
+//     const con = await client.connect();
+//     const data = await con.db(dbName).collection('users').find().toArray();
+//     await con.close();
+//     res.send(data);
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// });
 
 //geras
+
 app.post('/register', async (req, res) => {
   try {
     const con = await client.connect();
@@ -36,15 +37,16 @@ app.post('/register', async (req, res) => {
       password,
     };
 
-    // const existingUser = await con
-    //   .db(dbName)
-    //   .collection('users')
-    //   .findOne({ email });
+    const existingUser = await con
+      .db(dbName)
+      .collection('users')
+      .findOne({ email });
 
-    // if (existingUser) {
-    //   res.status(400).json({ error: 'Toks vartotojas jau yra.' });
-    //   return;
-    // }
+    if (existingUser) {
+      res.status(400).json({ error: 'Toks vartotojas jau yra.' });
+      await con.close();
+      return;
+    }
 
     const data = await con.db(dbName).collection('users').insertOne(user);
     await con.close();
@@ -104,23 +106,23 @@ app.get('/users', async (req, res) => {
 //geras
 app.get('/questions', async (req, res) => {
   try {
-    // const { sortOrder } = req.query;
+    const { sortOrder } = req.query;
 
-    // if (sortOrder !== 'dsc' && sortOrder !== 'asc') {
-    //   res.status(400).json({ message: 'Invalid sortOrder value' });
-    //   return;
-    // }
+    if (sortOrder !== 'dsc' && sortOrder !== 'asc') {
+      res.status(400).json({ message: 'Invalid sortOrder value' });
+      return;
+    }
     const con = await client.connect();
     let data = await con.db(dbName).collection('questions').find().toArray();
 
     
-    // if (sortOrder === 'asc') {
-    //   data = data.sort((a, b) => new Date(b.questionDate) - new Date(a.questionDate));
-    //   // 
-    // }  else{
-    //   data = data.sort((a, b) => new Date(a.questionDate) - new Date(b.questionDate));
-    //   // 
-    // } 
+    if (sortOrder === 'asc') {
+      data = data.sort((a, b) => new Date(b.questionDate) - new Date(a.questionDate));
+      // 
+    }  else{
+      data = data.sort((a, b) => new Date(a.questionDate) - new Date(b.questionDate));
+      // 
+    } 
     
 
     await con.close();
@@ -129,6 +131,8 @@ app.get('/questions', async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+
 app.get('/questions/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -150,17 +154,51 @@ app.get('/questions/:id', async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+
+// app.post('/questions', async (req, res) => {
+//   try {
+//     const con = await client.connect();
+//     const currentDate = new Date();
+
+//     const question = {
+//        questionText: req.body.questionText,
+//        questionDate: currentDate,
+//        updated:false,
+//        questionUpdateDate:currentDate,
+//        answers: [{
+//         answer:req.body.answerText,
+//         questionId: new ObjectId(id),
+//         updated: false,
+//         created: new Date(),
+//     }],
+//     };
+
+//     const data = await con.db(dbName).collection('questions').insertOne(question);
+//     res.status(200).json(data);
+//     await con.close();
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// });
 app.post('/questions', async (req, res) => {
   try {
     const con = await client.connect();
     const currentDate = new Date();
 
     const question = {
-       questionText: req.body.questionText,
-       questionDate: currentDate,
-       updated:false,
-      questionUpdateDate:currentDate,
-      answers: [],
+      questionText: req.body.questionText,
+      questionDate: currentDate,
+      updated: false,
+      questionUpdateDate: currentDate,
+      answers: [
+        {
+          answer: req.body.answer,
+          answearId: new ObjectId(), // Assuming you have access to generate a new ObjectId
+          updated: false,
+          created: currentDate,
+        },
+      ],
     };
 
     const data = await con.db(dbName).collection('questions').insertOne(question);
@@ -170,6 +208,8 @@ app.post('/questions', async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+
 app.put('/questions/:id', async (req, res) => {
   try {
     const con = await client.connect();
@@ -193,48 +233,7 @@ app.put('/questions/:id', async (req, res) => {
 
 
 
-// app.get('/questions/:id', async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const con = await client.connect();
-//     const data = await con
-//       .db(dbName)
-//       .collection('questions')
-//       .findOne({ _id: new ObjectId(id) });
 
-//     if (!data) {
-//       res.status(404).json({ message: 'Question not found' });
-//       return;
-//     }
-
-//     await con.close();
-//     res.status(200).json(data);
-//   } catch (err) {
-//     res.status(500).send(err);
-//   }
-// });
-
-
-// app.post('/questions', async (req, res) => {
-//   try {
-//     const con = await client.connect();
-//     const currentDate = new Date();
-//     const question = {
-//       questionText: req.body.questionText,
-//       questionDate: currentDate,
-//       updated: false,
-//       answers: [],
-//     };
-//     const data = await con
-//       .db(dbName)
-//       .collection('questions')
-//       .insertOne(question);
-//     res.status(200).json(data);
-//     await con.close();
-//   } catch (error) {
-//     res.status(500).send(error);
-//   }
-// });
 
 //geras
 // app.post('/questions', async (req, res) => {
@@ -278,27 +277,27 @@ app.put('/questions/:id', async (req, res) => {
 //     res.status(500).send(error);
 //   }
 // });
-// Serverio route
-app.post('/questions', async (req, res) => {
-  try {
-    const con = await client.connect();
-    const currentDate = new Date();
+// // Serverio route
+// app.post('/questions', async (req, res) => {
+//   try {
+//     const con = await client.connect();
+//     const currentDate = new Date();
 
-    const question = {
-      questionText: req.body.questionText,
-       questionDate: currentDate,
-       updated:false,
-      questionUpdateDate:currentDate,
-      answers: [],
-    };
+//     const question = {
+//       questionText: req.body.questionText,
+//        questionDate: currentDate,
+//        updated:false,
+//       questionUpdateDate:currentDate,
+//       answers: [],
+//     };
 
-    const data = await con.db(dbName).collection('questions').insertOne(question);
-    res.status(200).json(data);
-    await con.close();
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
+//     const data = await con.db(dbName).collection('questions').insertOne(question);
+//     res.status(200).json(data);
+//     await con.close();
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// });
 
 
 // app.put('/questions/:id', async (req, res) => {
@@ -382,24 +381,6 @@ app.delete('/questions/:id', async (req, res) => {
 //   }
 // });
 
-// // app.get('/answers/:questionId', async (req, res) => {
-// //   try {
-// //     const con = await client.connect();
-// //     const { questionId } = req.params;
-// //     const data = await con
-// //       .db(dbName)
-// //       .collection('answers')
-// //       .find( questionId(questionId))
-// //       .toArray(); 
-      
-
-// //     await con.close();
-    
-// //     res.status(200).json(data);
-// //   } catch (err) {
-// //     res.status(500).send(err);
-// //   }
-// // });
 
 
 
@@ -487,15 +468,34 @@ app.get('/questions/:id/answers', async (req, res) => {
     const data = await con
       .db(dbName)
       .collection('answers')
-      .find({questionId: new ObjectId(id) })
+      .find({ questionId: new ObjectId(id) })
       .toArray();
 
     await con.close();
     res.status(200).json(data);
+    console.log(data)
   } catch (err) {
     res.status(500).send(err);
+   
   }
 });
+
+// app.get('/questions/:id/answers', async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const con = await client.connect();
+//     const data = await con
+//       .db(dbName)
+//       .collection('answers')
+//       .find({questionId: new ObjectId(id) })
+//       .toArray();
+
+//     await con.close();
+//     res.status(200).json(data);
+//   } catch (err) {
+//     res.status(500).send(err);
+//   }
+// });
 
 
 
@@ -522,8 +522,30 @@ app.post('/questions/:id/answers', async (req, res) => {
   }
 });
 
+// app.post('/questions/:id/answers', async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { answer } = req.body;
+//     const con = await client.connect();
+//     const data = await con
+//       .db(dbName)
+//       .collection('answers')
+//       .insertOne({
+//         answer,
+//         answerId: new ObjectId(id),
+//         updated: false,
+//         created: new Date(),
+//       });
+
+//     await con.close();
+//     res.status(200).json(data);
+//   } catch (err) {
+//     res.status(500).send(err);
+//   }
+// });
+
 // Atnaujink atsakymą
-app.put('/answers/:id', async (req, res) => {
+app.patch('/answers/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const { answer } = req.body;
@@ -533,21 +555,41 @@ app.put('/answers/:id', async (req, res) => {
       .collection('answers')
       .updateOne(
         { _id: new ObjectId(id) },
-        { $set: { answer, updated: true } }
+        { $set: { answer, updated: true, updatedDate: new Date() } }
       );
 
     await con.close();
-
-    if (data.matchedCount === 0) {
-      res.status(404).json({ message: 'Answer not found' });
-      return;
-    }
-
     res.status(200).json(data);
   } catch (err) {
     res.status(500).send(err);
   }
 });
+
+// app.put('/answers/:id', async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { answer } = req.body;
+//     const con = await client.connect();
+//     const data = await con
+//       .db(dbName)
+//       .collection('answers')
+//       .updateOne(
+//         { _id: new ObjectId(id) },
+//         { $set: { answer, updated: true } }
+//       );
+
+//     await con.close();
+
+//     if (data.matchedCount === 0) {
+//       res.status(404).json({ message: 'Answer not found' });
+//       return;
+//     }
+
+//     res.status(200).json(data);
+//   } catch (err) {
+//     res.status(500).send(err);
+//   }
+// });
 
 // Ištrink atsakymą
 app.delete('/answers/:id', async (req, res) => {

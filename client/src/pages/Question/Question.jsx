@@ -367,10 +367,266 @@
 // };
 
 // export default Question;
+// import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
+// import { useParams, Link, useNavigate } from 'react-router-dom';
+// import Button from '../../components/Button/Button';
+// import './Question.scss';
+
+// const Question = () => {
+//   const { id } = useParams();
+//   const navigate = useNavigate();
+//   const [question, setQuestion] = useState(null);
+//   const [isLoading, setIsLoading] = useState(false);
+
+//   useEffect(() => {
+//     setIsLoading(true);
+//     getQuestion(id)
+//       .then((response) => {
+//         setQuestion(response);
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//       })
+//       .finally(() => {
+//         setIsLoading(false);
+//       });
+//   }, [id]);
+// // gaunamas klausimas pagal klausimo id
+//   const getQuestion = async (id) => {
+//     try {
+//       const response = await axios.get(`http://localhost:3000/questions/${id}`);
+//       return response.data;
+//     } catch (error) {
+//       throw error;
+//     }
+//   };
+// // istrinamas klausimas ir vartotojas grazinamas i forum page(pagrindini)
+//   const handleDeleteQuestion = async () => {
+//     try {
+//       await axios.delete(`http://localhost:3000/questions/${id}`);
+//       navigate('/');
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
+
+//   if (isLoading) {
+//     return <div>Loading...</div>;
+//   }
+
+//   if (!question) {
+//     return <div>Question not found</div>;
+//   }
+
+//   return (
+//     <div className="question-page">
+//       <div>
+//       <h1 className="question-page__text">{question.questionText}</h1>
+//       <p className="question-page__date">Date: {question.questionDate}</p>
+//       {question.updated && <p className="question-page__date">Update: {question.questionUpdateDate}</p>}
+//       </div>
+//       <div className="question-buttons">
+//        <Link to={`/questions/${id}/edit`} className="question-page__button" >
+//           Edit
+//         </Link>
+//         <Button onClick={handleDeleteQuestion} className="question-page__button">
+//           Delete
+//         </Button>
+//         <Link to={`/questions/${id}/answers`} className="question-page__button">
+//           Add Answer
+//         </Link>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Question;
+
+// import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
+// import { useParams, Link, useNavigate } from 'react-router-dom';
+// import Button from '../../components/Button/Button';
+// import './Question.scss';
+
+
+
+// const Question = () => {
+//   const { id } = useParams();
+//   const navigate = useNavigate();
+//   const [question, setQuestion] = useState(null);
+//   const [isLoading, setIsLoading] = useState(false);
+
+//   useEffect(() => {
+//     setIsLoading(true);
+//     getQuestion(id)
+//       .then((response) => {
+//         setQuestion(response);
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//       })
+//       .finally(() => {
+//         setIsLoading(false);
+//       });
+//   }, [id]);
+
+//   const getQuestion = async (id) => {
+//     try {
+//       const response = await axios.get(`http://localhost:3000/questions/${id}`);
+//       return response.data;
+//     } catch (error) {
+//       throw error;
+//     }
+//   };
+
+//   const handleDeleteQuestion = async () => {
+//     try {
+//       await axios.delete(`http://localhost:3000/questions/${id}`);
+//       navigate('/');
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
+
+//   if (isLoading) {
+//     return <div>Loading...</div>;
+//   }
+
+//   if (!question) {
+//     return <div>Question not found</div>;
+//   }
+
+//   return (
+//     <div className="question-page">
+//       <div>
+//         <h1 className="question-page__text">{question.questionText}</h1>
+//         <p className="question-page__date">Date: {question.questionDate}</p>
+//         {question.updated && <p className="question-page__date">Update: {question.questionUpdateDate}</p>}
+//       </div>
+//       <div className="question-buttons">
+//         <Link to={`/questions/${id}/edit`} className="question-page__button">
+//           Edit
+//         </Link>
+//         <Button onClick={handleDeleteQuestion} className="question-page__button">
+//           Delete
+//         </Button>
+//         <Link to={`/questions/${id}/answers`} className="question-page__button">
+//           Add Answer
+//         </Link>
+//       </div>
+//       {question.answer && (
+//         <div className="answer">
+//           <p className="answer-text">{question.answer}</p>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Question;
+// import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
+// import { useParams, useNavigate } from 'react-router-dom';
+// import Button from '../../components/Button/Button';
+// import './Question.scss';
+
+// const Question = () => {
+//   const { id } = useParams();
+//   const navigate = useNavigate();
+//   const [question, setQuestion] = useState(null);
+//   const [isLoading, setIsLoading] = useState(false);
+//   const [answers, setAnswers] = useState([]);
+
+//   useEffect(() => {
+//     const fetchQuestion = async () => {
+//       try {
+//         const response = await axios.get(`http://localhost:3000/questions/${id}`);
+//         setQuestion(response.data);
+//       } catch (error) {
+//         console.error(error);
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     };
+
+//     const fetchAnswers = async () => {
+//       try {
+//         const response = await axios.get(`http://localhost:3000/questions/${id}/answers`);
+//         setAnswers(response.data);
+//       } catch (error) {
+//         console.error(error);
+//       }
+//     };
+
+//     setIsLoading(true);
+//     fetchQuestion();
+//     fetchAnswers();
+//   }, [id]);
+
+//   const handleDeleteQuestion = async () => {
+//     try {
+//       await axios.delete(`http://localhost:3000/questions/${id}`);
+//       navigate('/');
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
+
+//   if (isLoading) {
+//     return <div>Loading...</div>;
+//   }
+
+//   if (!question) {
+//     return <div>Question not found</div>;
+//   }
+
+//   return (
+//     <div className="question-page">
+//       <div>
+//         <h1 className="question-page__text">{question.questionText}</h1>
+//         <p className="question-page__date">Date: {question.questionDate}</p>
+//         {question.updated && <p className="question-page__date">Update: {question.questionUpdateDate}</p>}
+//       </div>
+
+//       <div className="question-answers">
+//   {answers.map((answer) => (
+//     <div className="answer" key={answer.id}>
+//       <p>{answer.answerText}</p>
+//       <p className="answer-date">Answer Date: {answer.answerDate}</p>
+//       {answer.updated && <p className="answer-date">Update: {answer.answerUpdateDate}</p>}
+//     </div>
+//   ))}
+// </div>
+
+//       <div className="question-buttons">
+//         <Button onClick={handleDeleteQuestion} className="question-page__button">
+//           Delete
+//         </Button>
+//       </div>
+
+//       <div className="add-answer-form">
+      
+//       <form className="form" onSubmit={handleAnswerSubmit}>
+//         <FormItem
+//           label="Answer"
+//           type="text"
+//           placeholder="Enter answer"
+//           value={answerText}
+//           onChange={(e) => setAnswerText(e.target.value)}
+//         />
+//         <Button type="submit">Drop an answer</Button>
+//       </form>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Question;
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-// import Button from '../../components/Button/Button';
+import { useParams, useNavigate } from 'react-router-dom';
+import Button from '../../components/Button/Button';
 import './Question.scss';
 
 const Question = () => {
@@ -378,34 +634,55 @@ const Question = () => {
   const navigate = useNavigate();
   const [question, setQuestion] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [answers, setAnswers] = useState([]);
+  const [answerText, setAnswerText] = useState('');
 
   useEffect(() => {
-    setIsLoading(true);
-    getQuestion(id)
-      .then((response) => {
-        setQuestion(response);
-      })
-      .catch((error) => {
+    const fetchQuestion = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/questions/${id}`);
+       
+        setQuestion(response.data);
+      } catch (error) {
         console.error(error);
-      })
-      .finally(() => {
+      } finally {
         setIsLoading(false);
-      });
-  }, [id]);
+      }
+    };
 
-  const getQuestion = async (id) => {
-    try {
-      const response = await axios.get(`http://localhost:3000/questions/${id}`);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  };
+    setIsLoading(true);
+    fetchQuestion();
+
+    const fetchAnswers = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/questions/${id}/answers`);
+        setAnswers(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchAnswers();
+  }, [id]);
 
   const handleDeleteQuestion = async () => {
     try {
       await axios.delete(`http://localhost:3000/questions/${id}`);
       navigate('/');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleAnswerSubmit = async (e) => {
+    e.preventDefault();
+    console.log(answerText)
+    try {
+      await axios.post(`http://localhost:3000/questions/${id}/answers`, { answer: answerText });
+      
+      setAnswerText('');
+      setAnswers();
+      //fetchAnswers(); // Fetch answers again to update the list
     } catch (error) {
       console.error(error);
     }
@@ -422,24 +699,42 @@ const Question = () => {
   return (
     <div className="question-page">
       <div>
-      <h1 className="question-page__text">{question.questionText}</h1>
-      <p className="question-page__date">Date: {question.questionDate}</p>
-      {question.updated && <p>Update: {question.questionUpdateDate}</p>}
+        <h1 className="question-page__text">{question.questionText}</h1>
+        <p className="question-page__date">Date: {question.questionDate}</p>
+        {question.updated && <p className="question-page__date">Update: {question.questionUpdateDate}</p>}
       </div>
+
+      <div className="question-answers">
+        {answers.map((answer) => (
+          <div className="answer" key={answer._id}>
+            <p>{answer.answer}</p>
+            <p className="answer-date">Answer Date: {answer.created}</p>
+            {answer.updated && <p className="answer-date">Update: {answer.answerUpdateDate}</p>}
+          </div>
+        ))}
+      </div>
+
       <div className="question-buttons">
-        <Link to={`/questions/${id}/edit`} className="question-page__button">
-          Edit
-        </Link>
-        <button onClick={handleDeleteQuestion} className="question-page__button">
+        <Button onClick={handleDeleteQuestion} className="question-page__button">
           Delete
-        </button>
-        <Link to={`/questions/${id}/answers`} className="answer-section__button">
-          Add Answer
-        </Link>
+        </Button>
+      </div>
+
+      <div className="add-answer-form">
+        <form className="form" onSubmit={handleAnswerSubmit}>
+          <label htmlFor="answer">Answer</label>
+          <input
+            type="text"
+            id="answer"
+            placeholder="Enter answer"
+            value={answerText}
+            onChange={(e) => setAnswerText(e.target.value)}
+          />
+          <Button type="submit">Drop an answer</Button>
+        </form>
       </div>
     </div>
   );
 };
 
 export default Question;
-

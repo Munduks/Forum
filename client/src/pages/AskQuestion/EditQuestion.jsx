@@ -247,6 +247,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import FormItem from '../../components/FormItem/FormItem';
+import "./Action.scss"
 
 const EditQuestion = () => {
   const { id } = useParams();
@@ -317,17 +318,16 @@ const EditQuestion = () => {
   }
 
   return (
-    <div>
-      <h1>Edit Question</h1>
+    <div className="action-page">
+      <h1 className='action-title'>Edit Question</h1>
       <form className="form" onSubmit={handleQuestionSubmit}>
         <FormItem
-          label="Question"
+          label=""
           type="text"
-          placeholder="Enter question"
           value={question.questionText}
           onChange={handleQuestionChange}
         />
-        <Button type="submit" className="forum-button">
+        <Button type="submit" className="action-button">
           Save
         </Button>
       </form>

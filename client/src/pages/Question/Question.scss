@@ -1,17 +1,16 @@
 .question-page {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 2rem auto;
     padding: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    // display: flex;
+    // flex-direction: row;
+    // justify-content: space-between;
     background-color: white;
     
-  
-  
     .question-page__text {
       font-size: 24px;
       margin-bottom: 10px;
+      color:rgb(112, 104, 151);
      
     }
   
@@ -23,15 +22,15 @@
   
     .question-page__button {
       display: block;
-      padding: 10px 20px;
-      background-color: #007bff;
+      padding: 10px 16px;
+      background-color: lightblue;
       color: #fff;
       border: none;
       border-radius: 4px;
       font-size: 14px;
-      cursor: pointer;
+      text-align: center;
       text-decoration: none;
-      margin-right: 10px;
+      margin-bottom: 10px;
   
       &:hover {
         background-color: #0056b3;

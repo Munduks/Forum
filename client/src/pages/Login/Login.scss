@@ -1,9 +1,12 @@
-
-.form {
+.container{
   width: 500px;
+}
+.form {
+  width: 90%;
   padding: 2rem;
   background-color: #ffffff;
   border-radius: 10px;
+  box-sizing: content-box;
 
   &-item {
     margin-bottom: 1rem;

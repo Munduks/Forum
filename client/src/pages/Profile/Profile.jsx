@@ -10,12 +10,6 @@ const Profile = () => {
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState(user.password);
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const user = { name, email, password };
-  //   console.log(user);
-    // handleUpdateUser(user);
-  // };
 
   return (
     <form className="profile-form" >

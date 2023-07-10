@@ -4,6 +4,7 @@ import { UserContext } from "../../context/UserContext";
 import FormItem from "../../components/FormItem/FormItem";
 import Button from "../../components/Button/Button";
 import { REGISTER_ROUTE } from "../../routes/const";
+import axios from "axios";
 import "./Login.scss";
 
 const Login = () => {
@@ -13,10 +14,21 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const user = { name, email, password };
+  //   handleLogin(user, setError);
+  // };
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const user = { name, email, password };
-    handleLogin(user, setError);
+    try {
+      const response = await axios.post("http://localhost:3000/login", user);
+      console.log(response.data);
+      handleLogin(user, setError);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

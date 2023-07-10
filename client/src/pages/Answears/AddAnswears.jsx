@@ -52,7 +52,7 @@ const AddAnswer = ({ questionId }) => {
           value={answerText}
           onChange={(e) => setAnswerText(e.target.value)}
         />
-        <Button type="submit">Add Answer</Button>
+        <Button type="submit">Drop an answer</Button>
       </form>
     </div>
   );

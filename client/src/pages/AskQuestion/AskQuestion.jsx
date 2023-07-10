@@ -53,6 +53,7 @@ import { useNavigate } from 'react-router-dom';
 import FormItem from '../../components/FormItem/FormItem';
 import Button from '../../components/Button/Button';
 import { FORUM_ROUTE } from '../../routes/const';
+import "./Action.scss"
 
 const AskQuestion = () => {
   const [questionText, setQuestionText] = useState('');
@@ -78,17 +79,17 @@ const AskQuestion = () => {
   };
 
   return (
-    <div>
-      <h1>Ask a Question</h1>
+    <div className="action-page">
+      <h1 className='action-title'>Ask a Question</h1>
       <form className="form" onSubmit={handleQuestionSubmit}>
         <FormItem
-          label="Question"
+          label=""
           type="text"
           placeholder="Ask question"
           value={questionText}
           onChange={(e) => setQuestionText(e.target.value)}
         />
-        <Button type="submit">Drop a question</Button>
+        <Button type="submit" className="action-button">Drop a question</Button>
       </form>
     </div>
   );
