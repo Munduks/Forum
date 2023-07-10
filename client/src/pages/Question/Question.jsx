@@ -111,9 +111,7 @@ const Question = () => {
             <p>{answer.answer}</p>
             {answer.updated && <p className="answer-date">Update: {answer.answerUpdateDate}</p>}
             <Button onClick={() => handleDeleteAnswer(answer._id)}>Delete Answer</Button>
-            <Link to={`/answers/${id}/edit`} className="question-page__button">
-            Edit Q
-          </Link>
+            
           </div>
         ))}
       </div>
