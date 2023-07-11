@@ -23,6 +23,7 @@ const Login = () => {
       console.log(response.data);
       handleLogin(user, setError);
     } catch (error) {
+      setError("Klaidingai suvesti duomenys.");
       console.error(error);
     }
   };

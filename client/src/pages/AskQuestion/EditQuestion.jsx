@@ -38,7 +38,7 @@ const EditQuestion = () => {
       const updatedQuestion = {
         ...question,
         questionText: question.questionText, 
-        questionUpdateDate:question.currentDate 
+        questionUpdateDate:question.currentDate,
       };
       await axios.put(`http://localhost:3000/questions/${id}`, updatedQuestion);
       navigate('/');

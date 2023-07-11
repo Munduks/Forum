@@ -15,7 +15,7 @@ const AskQuestion = () => {
     e.preventDefault();
 
     if (questionText.trim() === '') {
-      return;
+      return;// jei laukas tuscias neleidia pateikti
     }
 
     try {

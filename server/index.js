@@ -57,7 +57,7 @@ app.post('/login', async (req, res) => {
       return;
     }
 
-    res.status(200).json({ message: 'Prisijungta sėkmingai.', user:{name, email} });
+    res.status(200).json({ message: 'Prisijungta sėkmingai.', user:{name, email, password} });
 
     await con.close();
   } catch (error) {
@@ -92,13 +92,12 @@ app.get('/questions', async (req, res) => {
     
     if (sortOrder === 'asc') {
       data = data.sort((a, b) => new Date(b.questionDate) - new Date(a.questionDate));
-      // 
+      
     }  else{
       data = data.sort((a, b) => new Date(a.questionDate) - new Date(b.questionDate));
-      // 
+    
     } 
     
-
     await con.close();
     res.status(200).json(data);
   } catch (error) {
@@ -269,26 +268,6 @@ app.delete('/answers/:id', async (req, res) => {
 
     await con.close();
     res.status(200).json(data);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
-app.get('/answers/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const con = await client.connect();
-    const data = await con
-      .db(dbName)
-      .collection('answers')
-      .findOne({ _id: new ObjectId(id) });
-
-    await con.close();
-
-    if (data) {
-      res.status(200).json(data);
-    } else {
-      res.status(404).json({ message: 'Answer not found' });
-    }
   } catch (err) {
     res.status(500).send(err);
   }
